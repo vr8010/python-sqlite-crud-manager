@@ -18,7 +18,8 @@ while True:
     print("2. Show Data")
     print("3. Update Data")
     print("4. Delete Data")
-    print("5. Exit")
+    print("5. Search Manager")
+    print("6. Exit")
 
     choice = input("Enter choice: ")
 
@@ -65,8 +66,22 @@ while True:
         con.commit()
         print("Data Deleted!")
 
-    # EXIT
+    # SEARCH DATA
     elif choice == "5":
+        search_name = input("Enter manager name to search: ")
+
+        cur.execute("SELECT * FROM manager WHERE name LIKE ?", ('%' + search_name + '%',))
+        result = cur.fetchall()
+
+        if result:
+            print("\nID  Name  Salary")
+            for row in result:
+                print(row[0], row[1], row[2])
+        else:
+            print("Manager not found!")
+
+    # EXIT
+    elif choice == "6":
         print("Goodbye!")
         break
 
